@@ -25,7 +25,7 @@ const mealDataLoad = foods =>{
         const mealDiv = document.createElement('div');
         mealDiv.classList.add('col');
         mealDiv.innerHTML = `
-            <div class="card">
+            <div onclick="onlyMeal(${food.idMeal})" class="card">
                 <img src="${food.strMealThumb}" class="card-img-top" alt="...">
                 <div class="card-body">
                 <h5 class="card-title">${food.strMeal}</h5>
@@ -51,5 +51,24 @@ const mealDataLoad = foods =>{
         searchField.value = '';
         mealHunter(searchText);
     })
+
+    const onlyMeal = (indivitiol) =>{
+        const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${indivitiol}`
+        fetch(url)
+        .then(res => res.json())
+        .then(data => displayMealDetails(data.meals[0]))
+    }
+
+    const displayMealDetails = (modal) =>{
+        const modalContainer = document.getElementById('midal-id');
+        modalContainer.innerHTML = '';
+        const modalDiv = document.createElement('div');
+        modalDiv.innerHTML=`
+          <img class="img-thumbnail img-fluid rounded mx-auto d-block" src="${modal.strMealThumb}" alt="">
+        `;
+        modalContainer.appendChild(modalDiv);
+    }
+
+    mealHunter('');
 
 
